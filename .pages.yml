@@ -12,11 +12,19 @@ content:
     fields:
       - name: language
         type: string
+        required: true
       - name: siteName
         type: string
+        required: true
       - name: logo
         type: image
         options:
           media: assets
           path: src/assets/images
+      - name: theme
+        type: select
+        required: true
+        options:
+          values: [light, dark, bumblebee, cupcake, pastel]
+          placeholder: Select a theme
       
