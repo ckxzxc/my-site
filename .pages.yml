@@ -4,4 +4,19 @@ media:
     input: src/assets/images
     output: /images
     categories: [image]
-    
+content:
+  - name: site
+    label: Site
+    type: file
+    path: site.json
+    fields:
+      - name: language
+        type: string
+      - name: siteName
+        type: string
+      - name: logo
+        type: image
+        options:
+          media: assets
+          path: src/assets/images
+      
