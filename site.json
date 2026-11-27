@@ -1,8 +1,10 @@
 {
-  "domain": "https://google.com",
   "language": "en",
   "siteName": "",
-  "logo": "",
+  "logo": {
+    "path": "",
+    "alt": ""
+  },
   "favicon": "",
   "fontDisplay": "comic",
   "fontBody": "helvetica",
@@ -13,7 +15,7 @@
     "color": "base",
     "buttonColor": "accent",
     "buttonStyle": "default",
-    "items": [
+    "links": [
       {"label": "Home", "url": "/"},
       {"label": "About", "url": "/about"}
     ]

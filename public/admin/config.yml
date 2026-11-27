@@ -1,0 +1,216 @@
+backend:
+  name: github
+  repo: ckxzxc/my-site
+
+media_folder: /src/images
+public_folder: /public/
+
+singletons:
+  - name: site
+    label: Site
+    file: /site.json
+    format: json
+    create: false
+    widget: object
+    fields:
+      - {label: Language, name: language, widget: string, default: "en"}
+      - {label: Site name, name: siteName, widget: string, default: ""}
+      - label: Logo
+        name: logo
+        widget: object
+        fields:
+          - {label: Path, name: path, widget: image}
+          - {label: Alt, name: alt, widget: string}
+        required: false
+      - {label: Theme, name: theme, widget: select, options: ["light", "dark", "bumblebee", "cupcake", "pastel"]}
+      - {label: Display font, name: fontDisplay, widget: select, options: ["comic", "bradley", "helvetica"], default: "helvetica"}
+      - {label: Body font, name: fontBody, widget: select, options: ["comic", "bradley", "helvetica"], default: "helvetica"}
+      - label: Navigation
+        name: navigation
+        widget: object
+        fields:
+          - {label: Color, name: color, widget: select, options: ["base", "primary", "secondary", "accent", "neutral"], default: "base"}
+          - {label: Button color, name: bottonColor, widget: select, options: ["base", "primary", "secondary", "accent", "neutral"], default: "neutral"}
+          - {label: Button style, name: buttonStyle, widget: select, options: ["default", "soft"], default: "default"}
+          - {label: Position, name: position, widget: select, options: ["top", "bottom"], default: "top"}
+          - {label: Rounded, name: rounded, widget: boolean, default: true}
+          - label: Links
+            name: links
+            widget: list
+            fields:
+              - {label: Label, name: label, widget: string}
+              - {label: Url, name: url, widget: string}
+collections:
+  - name: pages
+    label: Pages
+    folder: content/pages
+    format: json
+    create: true
+    widget: list
+    fields:
+      - label: Section
+        name: Section
+        widget: objects
+        fields:
+          - {label: Id, name: id, widget: string, hint: Id must be unique}
+          - {label: Height, name: height, widget: select, options: ["auto", "screen"], default: "auto"}
+          - {label: Padding, name: padding, widget: select, options: ["content", "topSpace"], default: "content"}
+          - {label: Color, name: color, widget: select, options: ["none", "base100", "base200", "base300", "primary", "secondary", "neutral", "accent", "info", "success", "warning", "error"], default: "none"}
+          - {label: Desktop background, name: bgDesktop, widget: string, required: false}
+          - {label: Mobile background, name: bgMobile, widget: string, required: false}
+          - {label: Justify content, name: justfyContent, widget: select, options: ["start", "center", "end"], default: "start"}
+          - label: Blocks
+            name: blocks
+            widget: object
+            fields:
+              - {label: Align, name: align, widget: select, options: ["start", "center", "end"], default: "start"}
+              - {label: Width, name: width, widget: select, options: ["full", "md", "lg"], default: "md"}
+              - {label: Gap, name: gap, widget: select, options: ["none", "sm", "md", "lg"], default: "md"}
+              - {label: Border, name: border, widget: boolean, default: false}
+              - {label: Color, name: color, widget: select, options: ["none", "base", "primary", "secondary", "neutral", "accent", "info", "success", "warning", "error"], default: "base"}
+              - {label: Effect, name: effect, widget: select, options: ["glass", "shadow"], required: false}
+              - label: Components
+                name: components
+                widget: list
+                types:
+                  - label: Text
+                    name: text
+                    widget: object
+                    fields:
+                      - {label: Gap, name: gap, widget: select, options: ["none", "sm", "md", "lg"], default: "none"}
+                      - {label: Hierarchy, name: hierarchy, widget: select, options: ["h1", "h2", "h3", "h4", "h5", "h6", "p"], default: "p"}
+                      - {lable: Font, name: font, widget: select, options: ["body", "display"], default: "body"}
+                      - {label: Size, name: size, widget: select, options: ['text-9xl', 'text-8xl','text-7xl', 'text-6xl', 'text-5xl', 'text-4xl', 'text-3xl', 'text-2xl', 'text-xl', 'text-lg', 'text-base', 'text-sm', 'text-xs'], default: "text-base"}
+                      - {label: Weiget, name: weight, widget: select, options: ["normal", "semibold", "bold"], default: "normal"}
+                      - {label: Color, name: color, widget: select, options: ['inherit', 'base', 'primary', 'secondary', 'accent', 'neutral', 'info', 'success', 'warning', 'error', 'primaryContent', 'secondaryContent', 'accentContent', 'neutralContent', 'successContent', 'infoContent', 'errorContent', 'warningContent'], default: "inherit"}
+                      - {label: Align, name: align, widget: select, options: ["start", "center", "end"], default: "start"}
+                      - {label: Muted, name: muted, widget: boolean, default: false}
+                      - {label: Text, name: Text, widget: text}
+                  - label: Hours
+                    name: Hours
+                    widget: object
+                    fields:
+                      - {label: Gap, name: gap, widget: select, options: ["none", "sm", "md", "lg"], default: "none"}
+                      - {label: Style, name: style, widget: select, options: ["space", "stack", "compact"], default: "space"}
+                      - label: Times
+                        name: times
+                        widget: list
+                        fields: 
+                          - {label: Day, name: day, widget: string}
+                          - {label: Hours, name: hours, widget: list}
+                  - label: Price list
+                    name: pricelist
+                    widget: object
+                    fields:
+                      - {label: Gap, name: gap, widget: select, options: ["none", "sm", "md", "lg"], default: "none"}
+                      - {label: Name, name: name, widget: string, hint: "For controlling accordion"}
+                      - {label: Style, name: style, widget: select, options: ["default", "accordion"], default: "default"}
+                      - {label: Component style, name: componentStyle, widget: select, options: ["comma", "bullet"], default: "comma"}
+                      - label: Category
+                        name: Category
+                        widget: list
+                        fields:
+                          - {label: Name, name: name, widget: string}
+                          - label: Items
+                            name: items
+                            widget: list
+                            fields:
+                            - {label: Name, name: name, widget: string}
+                            - {label: Price, name: price, widget: string, required: false}
+                            - {label: Components, name: components, widget: list, required: false}
+                            - {label: Notes, name: notes, widget: string, required: false}
+                  - label: Accordion
+                    name: Accordion
+                    widget: object
+                    fields:
+                      - {label: Gap, name: gap, widget: select, options: ["none", "sm", "md", "lg"], default: "none"}
+                      - {label: Name, name: name, widget: string, hint: "A unique name for controlling accordion."}
+                      - label: Items
+                        name: items
+                        widget: list
+                        fields:
+                          - {label: Title, name: title, widget: string}
+                          - {label: Text, name: text, widget: string}
+                  - lable: List
+                    name: list
+                    widget: object
+                    fields:
+                      - {label: Gap, name: gap, widget: select, options: ["none", "sm", "md", "lg"], default: "none"}
+                      - {label: Style, name: style, widget: select, options: ["stack", "compact"], default: "stack"}
+                      - label: Items
+                        name: items
+                        widget: list
+                        fields:
+                          - {label: Heading, name: heading, widget: string}
+                          - {label: Title, name: title, widget: string}
+                          - {label: Text, name: text, widget: string, required: false}
+                          - {lebel: Link, name: link, widget: object, fields: [{label: Label, name: label, widget: string}, {label: Url, name: url, widget: string}], required: false}
+                  - label: Buttons
+                    name: buttons
+                    widget: object
+                    fields:
+                      - {label: Gap, name: gap, widget: select, options: ["none", "sm", "md", "lg"], default: "none"}
+                      - {label: Layout, name: layout, widget: select, options: ["stack", "horizontal"], default: "horizontal"}
+                      - {label: Align, name: align, widget: select, options: ["start", "center", "end"], default: "start"}
+                      - label: Buttons
+                        name: buttons
+                        widget: list
+                        fields:
+                        - {label: Style, name: style, widget: select, options: ["default", "soft", "outline", "dash", "ghost", "link"], default: "default"}
+                        - {label: Size, name: size, widget: select, options: ["sm", "md"], default: "md"}
+                        - {label: Color, name: color, widget: select, options: ["default", "primary", "secondary", "neutral", "accent", "info", "success", "warning", "error"], default: "default"}
+                        - {label: New tab, name: newTab, widget: boolean, default: false}
+                        - {label: Label, name: label, widget: string}
+                        - {label: Url, name: url, widget: string}
+                  - label: Single image
+                    name: image
+                    widget: object
+                    fields:
+                      - {label: Gap, name: gap, widget: select, options: ["none", "sm", "md", "lg"], default: "none"}
+                      - {label: Width, name: width, widget: select, options: ["icon", "avatar", "full"], default: "full"}
+                      - {label: Align, name: align, widget: select, options: ["left", "center", "right"], default: "center"}
+                      - {label: Rounded, name: rounded, widget: boolean, default: false}
+                      - {label: Path, name: path, widget: image}
+                      - {label: Alt, name: alt, widget: string}
+                  - label: Gallery
+                    name: gallery
+                    widget: object
+                    fields:
+                      - {label: Gap, name: gap, widget: select, options: ["none", "sm", "md", "lg"], default: "none"}
+                      - {label: Minimun columns, name: minColumns, widget: select, options: ["1", "2"], default: "1"}
+                      - {label: Maximun columns, name: maxColumns, widget: select, options: ["2", "3", "4"], default: "3"}
+                      - {label: Ratio, name: ratio, widget: select, options: ["1/1", "4/3", "3/4"], default: "1/1"}
+                      - {label: Object fit, name: objectFit, widget: select, options: ["contain", "cover"], default: "cover"}
+                      - label: Images
+                        name: images
+                        widget: list
+                        fields:
+                          - {label: Path, name: path, widget: image}
+                          - {label: Alt, name: alt, widget: string}
+                  - label: Cards
+                    name: Cards
+                    widget: object
+                    fields:
+                      - {label: Gap, name: gap, widget: select, options: ["none", "sm", "md", "lg"], default: "none"}
+                      - {label: Columns, name: columns, widget: select, options: ["1", "2", "3"], default: "2"}
+                      - label: Cards
+                        name: cards
+                        widget: list
+                        fields:
+                          - {label: Color, name: color, widget: select, options: ["base", "primary", "secondary", "accent", "neutral", "info", "success", "warning", "error"], default: "base"}
+                          - label: Image
+                            name: image
+                            widget: object
+                            fields: 
+                              - {label: Path, name: path, widget: string}
+                              - {label: Alt, name: alt, widget: string}
+                            required: false
+                          - {label: Title, name: title, widget: string}
+                          - {label: Description, name: description, widget: string, required, false}
+                          - label: Link
+                            name: link
+                            widget: object
+                            fields:
+                              - {label: Label, name: label, widget: string}
+                              - {label: Url, name: url, widget: string}
+                            required: false

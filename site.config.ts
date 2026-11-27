@@ -8,10 +8,12 @@ const fonts = z.enum([
 
 
 export const siteSchema = z.object({
-    domain: z.url(),
     language: z.string().default('en').catch('en'),
     siteName: z.string().default(''),
-    logo: z.string().optional(),
+    logo: z.object({
+        path: z.string(),
+        alt: z.string()
+    }),
     theme: z.enum(['light', 'dark', 'bumblebee', 'cupcake', 'pastel'], "light").default('light').catch("light"),
     fontDisplay: fonts,
     fontBody: fonts,
@@ -21,7 +23,7 @@ export const siteSchema = z.object({
         buttonStyle: z.enum(["default", "soft"]).default("default").catch("default"),
         position: z.enum(['top', 'bottom']).default('top'),
         rounded: z.boolean().default(true),
-        items: z.array(z.object({
+        links: z.array(z.object({
             label: z.string().catch(''),
             url: z.string().catch('')
         }))

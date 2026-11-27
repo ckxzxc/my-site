@@ -109,10 +109,10 @@ const navButton = {
 						<p class="text-xl pb-item-lg pl-item pt-item font-bold font-display">Menu</p>
 			
 						{
-							navigation.items &&
-							navigation.items.map((item) => (
-								item.label && item.url &&
-									<li><a href={item.url}>{item.label}</a></li>
+							navigation.links &&
+							navigation.links.map((link) => (
+								link.label && link.url &&
+									<li><a href={link.url}>{link.label}</a></li>
 							))	
 							
 						}

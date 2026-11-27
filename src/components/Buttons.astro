@@ -21,7 +21,7 @@ const {buttons} = Astro.props;
             <a
                 href={b.url} target={b.newTab ? '_blank': ''} rel="noopener noreferrer">
                 <button class:list={[
-                    `btn ${buttonClasses.style[b.style]} ${buttonClasses.color[b.color]} ${buttonClasses.size[b.size]}`,
+                    `btn ${buttonClasses.style[b.style]} ${buttonClasses.color[b.color]} ${buttonClasses.size[buttons.size]}`,
                     {'btn-block': buttons.layout === 'stack'}
                 ]}>
                     {b?.label}

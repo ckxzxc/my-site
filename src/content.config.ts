@@ -82,9 +82,9 @@ const buttonsSchema = z.object({
     gap: gap,
     layout: z.enum(['stack', 'horizontal']).default('horizontal'),
     align: z.enum(['start', 'center', 'end']).default('start'),
+    size: z.enum(['md', 'sm']).default('md'),
     buttons: z.array(z.object({
         style: z.enum(["default", "soft", "outline", "dash", "ghost", "link"]).default('default'),
-        size: z.enum(['md', 'sm']).default('md'),
         color: color,
         newTab: z.boolean().default(false),
         label: z.string(),
@@ -98,7 +98,6 @@ const singleImageSchema = z.object({
     gap: gap,
     path: z.string().min(1, "Image path might be invalid!"),
     alt: z.string().min(1, "Image description required!"),
-    ratio: z.enum(['original', '1:1', '4:3', '3:4']).default('original'),
     align: z.enum(['left', 'center', 'right']).default('center'),
     width: z.enum(['icon', 'avatar', 'full']).default('full'),
     rounded: z.boolean().default(false)
@@ -109,7 +108,7 @@ const gallerySchema = z.object({
     gap: gap,
     minColumns: z.enum(['1', '2']).default('1'),
     maxColumns: z.enum(['2', '3', '4']).default('3'),
-    ratio: z.enum(['3/4', '4/3', '1/1']),
+    ratio: z.enum(['3/4', '4/3', '1/1']).default('1/1'),
     display: z.enum(['cover', 'contain']).default('cover'),
     images: z.array(z.object({
         path: z.string(),
@@ -156,7 +155,7 @@ export const blockSchema = z.object({
     align: z.enum(["start", "center", "end"]).default("start"),
     width: z.enum(["full", "lg", "md"]).default('md'),
     gap: z.enum(['none', 'lg', 'md', 'sm']).default('md'),
-    color: z.enum(["none", "base100", "primary", "secondary", "neutral", "accent", "info", "success", "warning", "error"]).default("base100"),
+    color: z.enum(["none", "base", "primary", "secondary", "neutral", "accent", "info", "success", "warning", "error"]).default("base"),
     effect: z.enum(["glass", "shadow"]).optional(),
     border: z.boolean().default(false),
     components: z.array(componentSchema, "Require at least one component!")
@@ -169,7 +168,7 @@ export const sectionSchema = z.object({
     color: z.enum(["none", "base100", "base200", "base300", "primary", "secondary", "neutral", "accent", "info", "success", "warning", "error"]).default("base100"),
     bgDesktop: z.string().optional(),
     bgMobile: z.string().optional(),
-    justifyContent: z.enum(['start', 'center', 'end', 'between', 'around', 'evenly']).default("start"),
+    justifyContent: z.enum(['start', 'center', 'end', 'between']).default("start"),
     blocks: z.array(blockSchema, "Require at least one block!"),
 });
 
