@@ -1,0 +1,73 @@
+---
+import type {Section} from '../content.config';
+import {bgColorClasses} from '../lib/classes';
+
+interface Props {
+    id: Section["id"];
+    color: Section["color"];
+    justifyContent: Section["justifyContent"];
+    padding: Section["padding"];
+    height: Section["height"];
+    bgDesktop: Section["bgDesktop"];
+    bgMobile: Section["bgMobile"];
+}
+
+const {id, color, justifyContent, height, padding, bgDesktop, bgMobile} = Astro.props;
+
+
+const justifyClasses = {
+    start: 'justify-start',
+    center: 'justify-center',
+    end: 'justify-end',
+    between: 'justify-between',
+    around: 'justify-around',
+    evenly: 'justify-evenly'
+} as const;
+
+const paddingClasses = {
+    content: 'py-section-padding-lg px-section-padding-sm md:px-section-padding-lg lg:px-section-padding-lg',
+    topSpace: 'px-section-padding-sm md:px-section-padding-lg lg:px-section-padding-lg pb-section-padding-lg pt-section-padding-2xl'
+} as const;
+
+const heightClasses = {
+    auto: 'h-auto',
+    screen: 'min-h-screen'
+} as const;
+
+const backgroundStyle = [
+  bgDesktop && `--section-bg-desktop: url("${bgDesktop}")`,
+  bgMobile && `--section-bg-mobile: url("${bgMobile}")`,
+]
+  .filter(Boolean)
+  .join('; ');
+---
+
+<section id={id} style={backgroundStyle || undefined} class:list={[
+    "flex flex-col overflow-hidden w-full bg-fixed bg-no-repeat bg-cover bg-center",
+    "py-section-padding-lg px-section-padding-sm",
+    justifyClasses[justifyContent],
+    bgColorClasses[color],
+    heightClasses[height],
+    paddingClasses[padding],
+    bgDesktop && !bgMobile && 'section-bg-desktop-only',
+    bgDesktop && bgMobile && 'section-bg-responsive',
+]}>
+    <slot/>
+
+</section>
+
+<style>
+  .section-bg-desktop-only {
+    background-image: var(--section-bg-desktop);
+  }
+
+  .section-bg-responsive {
+    background-image: var(--section-bg-mobile);
+  }
+
+  @media (min-width: 48rem) {
+    .section-bg-responsive {
+      background-image: var(--section-bg-desktop);
+    }
+  }
+</style>

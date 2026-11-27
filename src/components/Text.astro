@@ -1,0 +1,26 @@
+---
+import type {Text} from '../content.config';
+import {componentGapClasses, textColorClasses, fontWeightClasses} from '../lib/classes';
+
+interface Props {
+    text: Text;
+}
+
+const {text} = Astro.props;
+const Element = text?.hierarchy ?? 'p';
+
+---
+
+<Element class:list={[
+    componentGapClasses[text.gap],
+    textColorClasses[text.color],
+    fontWeightClasses[text.weight],
+    {"currentColor/75": text.muted},
+    {"text-center": text.align === 'center'},
+    {"text-end": text.align === "end"},
+    {"font-display" : text.font === 'display'},
+    {"font-body": text.font === 'body'},
+    `${text.size}`,
+]}>
+    {text?.text}
+</Element>

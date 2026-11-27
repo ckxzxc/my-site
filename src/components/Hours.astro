@@ -1,0 +1,62 @@
+---
+import type { Hours } from '../content.config';
+import {componentGapClasses} from '../lib/classes';
+interface Props {
+    hours: Hours;
+} 
+const { hours } = Astro.props;
+
+---
+<div class:list={[
+    componentGapClasses[hours.gap]
+]}>
+    {
+        hours.style == 'stack'?
+        <div class="flex flex-col gap-item">
+            {
+                hours.times.map((item) => (
+                    item.day && item.hours && 
+                    <div>                    
+                        <p class="text-sm mb-1">{item.day}</p>
+                        {
+                            item.hours.map((hour)=> (
+                                <p class="text-sm">{hour}</p>
+                            ))
+                        }        
+                    </div>
+                ))
+            }
+        </div>: hours.style === 'compact'?
+        <div class="grid grid-cols-2 gap-y-item gap-x-item-sm">
+            {
+                hours.times.map((item) => (
+                    <div>
+                        <p class="text-sm mb-item-sm">{item.day}</p>
+                        {
+                            item.hours.map((hour)=> (
+                                <p class="text-sm">{hour}</p>
+                            ))
+                        }
+                    </div>
+                ))
+            }
+        </div>:
+        <div class="">
+            {
+                hours.times.map((item) => (
+                    <div class="flex justify-between gap-item text-base py-2">
+                        <p class="text-sm">{item.day}</p>
+                        <div class="flex flex-col gap-1">
+                            {
+                                item.hours.map((hour) => (
+                                    <p class="text-nowrap text-end text-sm">{hour}</p>
+                                ))
+                            }
+                        </div>
+                    </div>
+                ))
+            }
+        </div>
+    }
+</div>
+    

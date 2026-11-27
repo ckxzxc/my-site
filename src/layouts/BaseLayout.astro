@@ -1,0 +1,130 @@
+---
+import "../assets/global.css";
+
+
+const {title, description, color} = Astro.props;
+import siteData from "../../site.json";
+import {siteSchema} from "../../site.config";
+
+const parsedSiteDate = siteSchema.parse(siteData);
+const theme = parsedSiteDate.theme;
+const language = parsedSiteDate.language;
+const navigation = parsedSiteDate.navigation;
+
+const fonts = {
+	georgia: "'Georgia', Serif",
+	comic: "'Comic Sans ms', Comic Sans, cursive",
+	helvetica: "'Helvetica Neue', Helvetica, Sans Serif",
+	bradley: "'Bradley Hand ITC', Bradley Hand, cursive"
+} as const;
+
+const fontDisplay = fonts[parsedSiteDate.fontDisplay];
+const fontBody = fonts[parsedSiteDate.fontBody];
+const navColor = {
+	base: "bg-base-200 text-base-content",
+	primary: "bg-primary text-primary-content",
+	secondary: "bg-secondary text-secondary-content",
+	neutral: "bg-neutral text-neutral-content",
+	accent: "bg-accent text-accent-content"
+} as const;
+const navButton = {
+	color: {
+		base: "",
+		primary: "btn-primary",
+		secondary: "btn-secondary",
+		neutral: "btn-neutral",
+		accent: "btn-accent"
+	},
+	style: {
+		default: "",
+		soft: "btn-soft",
+		
+	}
+} as const;
+
+---
+
+<!doctype html>
+<html data-theme={theme} lang={language} style={`--font-display: ${fontDisplay}; --font-body: ${fontBody};`}>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		<meta name="description" content={description}>
+	</head>
+	<body color={color} class:list={['font-body', 'bg-base-200']}>
+
+		<div class="drawer drawer-end">
+			<input id="my-drawer" type="checkbox" class="drawer-toggle" />
+
+			<div class="drawer-content">
+				<!-- Page content here -->
+				<div class="flex flex-col items-center">
+					<slot />			
+				</div>
+					
+				<label for="my-drawer" class:list={[
+					navButton.style[navigation.buttonStyle],
+					navButton.color[navigation.buttonColor],
+					{"top-4 right-4": navigation.position === "top"},
+					{"bottom-4 right-4": navigation.position === "bottom"},
+					"drawer-button btn btn-lg btn-circle fixed"
+				]}>
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" />
+					</svg>
+					
+				</label>
+				
+			</div>
+
+			<nav class="drawer-side font-body">
+				<label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+
+
+				<ul class:list={[
+					{"rounded-l-[40px]": navigation.rounded},
+					navColor[navigation.color],
+					{"justify-end pb-20 py-12": navigation.position === "bottom"},
+					{"pt-20 pb-12": navigation.position === "top"},
+					"menu min-h-full w-80 text-lg font-semibold md:w-100 px-6 flex flex-col"
+				]}>
+					<label for="my-drawer" aria-label="close sidebar" class="drawer-overlay" class:list={[
+						navButton.style[navigation.buttonStyle],
+						navButton.color[navigation.buttonColor],
+						{"bottom-4 right-4": navigation.position === "bottom"},
+						{"top-4 right-4": navigation.position === "top"},
+						"btn btn-circle btn-lg fixed"
+					]}>
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+						</svg>
+					</label>
+				
+					<!-- Sidebar content here -->
+					
+						<p class="text-xl pb-item-lg pl-item pt-item font-bold font-display">Menu</p>
+			
+						{
+							navigation.items &&
+							navigation.items.map((item) => (
+								item.label && item.url &&
+									<li><a href={item.url}>{item.label}</a></li>
+							))	
+							
+						}
+					
+			
+				
+
+				</ul>
+				
+			</nav>
+		</div>
+
+	</body>
+</html>
+

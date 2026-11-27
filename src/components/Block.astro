@@ -1,0 +1,56 @@
+---
+import type {Block} from '../content.config';
+import { bgColorClasses, borderColorClasses, textColorClasses } from '../lib/classes';
+interface Props {
+    border: Block["border"];
+    color: Block["color"];
+    effect: Block["effect"];
+    width: Block["width"];
+    align: Block["align"];
+    gap: Block["gap"];
+}
+const {border, color, width, align, gap, effect} = Astro.props;
+const textColorClass = (color !== 'none' && color !== 'base100'
+    ? `${color}Content`
+    : 'base') as keyof typeof textColorClasses;
+
+
+const blockAlignClasses = {
+    start: 'self-start',
+    center: 'self-center',
+    end: 'self-end'
+} as const;
+
+const blockWidthClasses = {
+    full: 'w-full p-block-padding-md sm:p-block-padding-lg',
+    lg: 'w-full sm:w-3/4 md:w-2/3 lg:w-1/2 p-block-padding-md sm:p-block-padding-lg',
+    md: 'w-full max-w-96 sm:w-2/3 sm:max-w-96 md:w-2/5 md:min-w-96 lg:min-w-100 lg:w-1/3 p-block-padding-md'
+} as const;
+
+const blockGapClasses = {
+    none: '',
+    sm: 'mb-block-gap-sm',
+    md: 'mb-block-gap-md',
+    lg: 'block-gap-sm sm:mb-block-gap-lg'
+} as const;
+
+
+const blockEffectClasses = {
+    shadow: 'shadow-[0_3px_10px_rgb(0,0,0,0.2)]',
+    glass: 'glass'
+} as const;
+
+---
+
+<div class:list={[
+    blockGapClasses[gap],
+    blockAlignClasses[align],
+    blockWidthClasses[width],
+    effect && blockEffectClasses[effect],
+    bgColorClasses[color],
+    border && borderColorClasses[color],
+    textColorClasses[textColorClass],
+    'rounded-box font-body'
+]}>
+    <slot/>
+</div>

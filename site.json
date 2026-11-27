@@ -1,0 +1,21 @@
+{
+  "domain": "https://google.com",
+  "language": "en",
+  "siteName": "",
+  "logo": "",
+  "favicon": "",
+  "fontDisplay": "comic",
+  "fontBody": "helvetica",
+  "theme": "bumblebee",
+  "navigation": {
+    "position": "bottom",
+    "rounded": true,
+    "color": "base",
+    "buttonColor": "accent",
+    "buttonStyle": "default",
+    "items": [
+      {"label": "Home", "url": "/"},
+      {"label": "About", "url": "/about"}
+    ]
+  }
+}

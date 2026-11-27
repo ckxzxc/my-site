@@ -1,0 +1,58 @@
+---
+import type {List} from '../content.config';
+import {componentGapClasses} from '../lib/classes';
+interface Props {
+    list: List;
+}
+const {list} = Astro.props;
+---
+<div class:list={[
+    componentGapClasses[list.gap],
+    'flex flex-col gap-item w-full max-w-180'
+]}>
+    
+    {
+        list.style === 'stack'?
+        list.items.map((item) => (
+            <div class="border-b border-current/10 pb-1 pb-1">
+                
+                {item.heading && <p class="text-lg pb-item-sm">{item.heading}</p>}
+                <p class="text-base">{item.title}</p>
+                {item.text && <p class="mt-1 text-sm text-current/75">{item.text}</p>}
+                
+                {
+                    item.link && 
+                    <a href={item.link.url} class="mt-2 float-right text-sm group">
+                        <p class="inline-block">{item.link.label}</p>
+                        <svg class="ml-1 inline-block transition delay-10 duration-300 ease-in-out group-hover:translate-x-2"
+                         xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                }
+                
+            </div>
+        )):
+        list.items.map((item) => (
+            <div class="border-b border-current/10 pb-1">
+                <div class="grid grid-cols-4 gap-item">
+                    {item.heading && <p class="text-base">{item.heading}</p>}
+                    <span class={item.heading? 'col-span-3': 'col-span-4'}>
+                        <p class="text-base">{item.title}</p>
+                        {item.text && <p class="text-sm text-current/75 mt-1">{item.text}</p>}
+                        {
+                            item.link && 
+                            <a href={item.link.url} class="float-right text-sm group mt-item-sm">
+                                <p class="inline-block">{item.link.label}</p>
+                                <svg class="ml-1 inline-block transition delay-10 duration-300 ease-in-out group-hover:translate-x-2"
+                                xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M12 5l7 7-7 7"/>
+                                </svg>
+                            </a>
+                        }
+                    </span>
+                </div>
+                
+            </div>
+        ))
+    }
+    
+</div>

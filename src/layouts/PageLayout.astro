@@ -1,0 +1,71 @@
+---
+import Block from '../components/Block.astro';
+import Canvas from '../components/Canvas.astro';
+import Hours from "../components/Hours.astro";
+import Pricelist from '../components/Pricelist.astro';
+import Accordion from '../components/Accordion.astro';
+import Text from '../components/Text.astro';
+import List from '../components/List.astro';
+import Buttons from '../components/Buttons.astro';
+import SingleImage from '../components/SingleImage.astro';
+import Gallery from '../components/Gallery.astro';
+
+import siteData from "../../site.json";
+import {siteSchema} from "../../site.config";
+
+const parsedSiteData = siteSchema.parse(siteData);
+
+import type {Page} from '../content.config.ts';
+interface Props {
+    page?: Page,
+}
+const {page} = Astro.props
+
+---
+
+<main class="w-full flex flex-col items-center">
+    {
+        
+        page?.sections.map((section) => (
+            <Canvas id={section.id} 
+                color={section.color}
+                justifyContent={section.justifyContent}
+                height={section.height}
+                padding={section.padding}
+                bgDesktop={section.bgDesktop}
+                bgMobile={section.bgMobile}>
+                {
+                    section.blocks.map((block) => (
+                        <Block color={block.color} effect={block.effect} border={block.border} width={block.width} align={block.align} gap={block.gap}>
+                            {
+                                block.components.map((component) => {
+                                    switch (component.type) {
+                                        case "hours":
+                                            return <Hours hours={component} />;
+                                        case "text":
+                                            return <Text text={component} />;
+                                        case "list":
+                                            return <List list={component} />;
+                                        case "accordion":
+                                            return <Accordion accordion={component} />;
+                                        case "pricelist":
+                                            return <Pricelist pricelist={component} />;
+                                        case "buttons":
+                                            return <Buttons buttons={component} />;
+                                        case "image":
+                                            return <SingleImage singleImage={component} />;
+                                        case "gallery":
+                                            return <Gallery gallery={component} />;
+                                        default:
+                                            return null;
+                                    }
+                                })
+                            }
+                        </Block>
+                    ))
+                }
+            </Canvas>
+        ))
+    }
+
+</main>

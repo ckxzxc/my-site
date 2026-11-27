@@ -1,0 +1,100 @@
+---
+import type {Pricelist} from '../content.config';
+import {componentGapClasses} from '../lib/classes';
+interface Props {
+    pricelist: Pricelist
+}
+const {pricelist} = Astro.props;
+---
+
+<div class:list={[
+    componentGapClasses[pricelist.gap],
+    "w-full"
+]}>
+    {  pricelist.style != "accordion" ?
+        <div class="w-full flex flex-col gap-item-lg">
+            {
+                pricelist.categories.map((category) => (
+                    
+                    <div class=''>
+                        <p class="mb-item text-base font-semibold">{category.name}</p>
+                        <div class="flex flex-col gap-item">
+                            {
+                                category.items.map((item) => (
+                                    <div class="mb-2 border-b border-current/30 pb-1">
+                                        <div class="flex content-between">
+                                            <p class="text-base">{item.name}</p>
+                                            {item.price && <p class="flex-grow text-sm text-right text-nowrap">{item.price}</p>}
+                                        </div>
+                                        {
+                                            item.components &&
+                                            <div class="mt-item-sm">
+                                                {
+                                                    pricelist.componentStyle === "comma" ?
+                                                    <p class="text-sm">{item.components.join(', ')}</p>:
+                                                    <ul class="ml-item-sm list-disc list-inside text-sm flex flex-col gap-item-sm"> 
+                                                        {
+                                                            item.components.map((component) => (
+                                                                <li>{component}</li>
+                                                            ))
+                                                        }
+                                                    </ul>
+                                                }
+                                            </div>
+                                        }
+                                        {
+                                            item.notes && <p class="mt-1 text-sm text-current/75">{item.notes}</p>
+                                        }
+                                </div>
+                                ))
+                            }
+                        </div>
+                    </div>
+                ))         
+            }
+        </div>:
+
+        <div class="w-full flex flex-col gap-item-sm">
+            {
+                pricelist.categories.map((category, index) => (
+                    
+                    <div class="w-full collapse border border-current/50 pb-1">
+                        <input type="radio" name={pricelist.name} checked={index === 0} />
+                        <div class="collapse-title text-base font-semibold">{category.name}</div>
+                        <div class="collapse-content w-full flex flex-col gap-item-sm">
+                        {
+                            category.items.map((item) => (
+                                <div class="mb-2 pb-1 border-current/30 border-b">
+                                    <div class="flex content-between">
+                                        <p class="text-base">{item.name}</p>
+                                        {item.price && <p class="flex-grow text-sm text-right text-nowrap">{item.price}</p>}
+                                    </div>
+                                    {
+                                        item.components &&
+                                        <div class="mt-item-sm">
+                                            {
+                                                pricelist.componentStyle === "comma" ?
+                                                <p class="text-sm">{item.components.join(', ')}</p>:
+                                                <ul class="ml-item-sm list-disc list-inside text-sm flex flex-col gap-item-sm"> 
+                                                    {
+                                                        item.components.map((component) => (
+                                                            <li>{component}</li>
+                                                        ))
+                                                    }
+                                                </ul>
+                                            }
+                                        </div>
+                                    }
+                                    {
+                                        item.notes && <p class="text-sm text-current/75 mt-1">{item.notes}</p>
+                                    }
+                            </div>
+                            ))
+                        }
+                        </div>
+                    </div>
+                ))
+            } 
+        </div>
+    }
+</div>

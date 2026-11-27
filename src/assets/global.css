@@ -1,0 +1,48 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@plugin "daisyui"{
+	themes: light --default, dark --prefersdark, cupcake, bumblebee, pastel;
+	include: link, button, collapse, menu, dropdown, glass, drawer;
+};
+@plugin "daisyui/theme" {
+ 	
+}
+
+@theme inline {
+
+
+	--spacing-block-padding-sm: 0.5rem;
+	--spacing-block-padding-md: 1rem;
+	--spacing-block-padding-lg: 1.5rem;
+
+	--spacing-block-gap-sm: 1rem;
+	--spacing-block-gap-md: 2rem;
+	--spacing-block-gap-lg: 3rem;
+
+	
+	--spacing-section-padding-sm: 1rem;
+	--spacing-section-padding-md: 2rem;
+	--spacing-section-padding-lg: 3rem;
+	--spacing-section-padding-xl: 4rem;
+	--spacing-section-padding-2xl: 6rem;
+
+	--spacing-item-sm: 0.5rem;
+	--spacing-item: 1rem;
+	--spacing-item-lg: 2rem;
+	
+}
+
+html {
+	overscroll-behavior: none;
+}
+body {
+	.font-display {
+		font-family: var(--font-display);
+	}
+
+	.font-body {
+		font-family: var(--font-body);
+	}
+	background-attachment: fixed;
+	
+}

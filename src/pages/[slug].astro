@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageLayout from '../layouts/PageLayout.astro';
+import { getCollection } from 'astro:content';
+import {pageSchema} from '../content.config.ts';
+export async function getStaticPaths() {
+
+  const subPages = (await getCollection('pages')).filter((page:any) => page.id !== 'index');
+
+  return subPages.map((page:any) => ({
+    params: { slug: page.id },
+    props: { page: page.data },
+  }));
+}
+
+const {page} = Astro.props;
+const parsedPage = pageSchema.parse(page)
+---
+
+<BaseLayout title={parsedPage.title ? parsedPage.title: ''} description={parsedPage.description ? parsedPage.description: ''}>
+   
+   <PageLayout page={parsedPage}></PageLayout>
+
+</BaseLayout>

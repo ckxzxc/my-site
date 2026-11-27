@@ -1,0 +1,32 @@
+---
+import type {Buttons} from '../content.config';
+import {componentGapClasses, buttonClasses} from '../lib/classes';
+
+interface Props {
+    buttons: Buttons;
+}
+const {buttons} = Astro.props;
+
+
+---
+<div class:list={[
+    'w-full',
+    buttonClasses.align[buttons.align],
+    componentGapClasses[buttons.gap],
+    {'flex flex-col gap-item-sm': buttons?.layout === 'stack'},
+    {'flex flex-wrap gap-item-sm': buttons?.layout === 'horizontal'}
+]}>
+    {
+        buttons.buttons.map((b) => (
+            <a
+                href={b.url} target={b.newTab ? '_blank': ''} rel="noopener noreferrer">
+                <button class:list={[
+                    `btn ${buttonClasses.style[b.style]} ${buttonClasses.color[b.color]} ${buttonClasses.size[b.size]}`,
+                    {'btn-block': buttons.layout === 'stack'}
+                ]}>
+                    {b?.label}
+                </button>
+            </a>
+        ))
+    }
+</div>

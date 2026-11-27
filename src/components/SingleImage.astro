@@ -1,0 +1,48 @@
+---
+import {Image} from 'astro:assets';
+import type { SingleImage } from '../content.config';
+import {componentGapClasses} from '../lib/classes';
+import { getImage } from '../lib/utils/image';
+
+interface Props {
+    singleImage: SingleImage;
+} 
+const { singleImage } = Astro.props;
+
+const image = getImage(singleImage.path);
+
+
+const ratioClasses = {
+    '1:1': 'aspect-1/1, object-cover',
+    '3:4': 'aspect-3/4, object-cover',
+    '4:3': 'aspect-4/3, object-cover',
+    original: ''
+} as const;
+const widthClasses = {
+    icon: 'w-10 object-cover',
+    avatar: 'w-24 object-cover',
+    full: 'w-full object-cover'
+} as const;
+const alignClasses = {
+    right: 'items-end',
+    center: 'items-center',
+    left: 'items-start'
+} as const;
+
+---
+<div class:list={[
+    componentGapClasses[singleImage.gap]
+]}>
+    
+    <Image 
+        src={image!}
+        alt={singleImage.alt}
+        loading="lazy"
+        class:list={[
+            ratioClasses[singleImage.ratio],
+            alignClasses[singleImage.align],
+            widthClasses[singleImage.width],
+            {'rounded-box': singleImage.rounded},                    
+        ]}
+    />
+</div>

@@ -1,0 +1,25 @@
+title: title
+description: description
+sections:
+  - id: hero
+    height: auto
+    padding: topSpace
+    color: base100
+    justfyContent: start
+    blocks:
+      - align: center
+        width: md
+        gap: none
+        color: primary
+        border: false
+        components:
+          - type: text
+            gap: lg
+            hierarchy: h1
+            font: display
+            size: text-6xl
+            weight: bold
+            color: inherit
+            align: start
+            muted: false
+            text: Home Page Title

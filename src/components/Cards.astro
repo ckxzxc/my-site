@@ -1,0 +1,70 @@
+---
+import {Image} from 'astro:assets';
+import type { Cards } from '../content.config';
+import {getImage} from '../lib/utils/image'
+import {componentGapClasses, bgColorClasses, textColorClasses, buttonClasses} from '../lib/classes';
+
+interface Props {
+    cards: Cards;
+}
+const { cards } = Astro.props;
+
+
+
+const columnClasses = {
+  '1': 'grid-cols-1',
+  '2': 'grid-cols-1 sm:grid-cols-2',
+  '3': 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3'
+} as const;
+
+---
+
+<div class:list={[
+  componentGapClasses[cards.gap],
+  columnClasses[cards.columns],
+  'gap-item-sm'
+]}>
+  {
+    cards.cards.map((card) => {
+      const image = card.image ? getImage(card.image.path) : undefined;
+      const textColorClass = (card.color!=='base' ? `${card.color}Content`: 'base') as keyof typeof textColorClasses; 
+        <div class:list={[
+          textColorClasses[textColorClass],
+          bgColorClasses[card.color],
+          'rounded-box p-1'
+        ]}>
+              {
+                image &&
+                <div>
+                  <Image 
+                    src={image!}
+                    alt={card.image?.alt ?? ''}
+                    loading="lazy"
+                    class:list={['rounded-box object-cover aspect-16/9']}
+                  />
+                </div>            
+              }
+              <div class="p-item-sm flex flex-col">
+                <div class="flex-grow">
+                  <p class="text-base">{card.title}</p>
+                  <p class="text-sm currentColor/75">{card.description}</p>
+                </div>
+                {
+                  card.link &&
+                  <a class="self-end" href={card.link.url}>
+                    <button aria-label="card button" class:list={[
+                      buttonClasses.color[card.color],
+                      "btn btn-sm"
+                    ]}>
+                      {card.link.label}
+                    </button>
+                  </a>
+                }
+              </div>
+
+
+        </div>
+    })
+  }
+
+</div>
