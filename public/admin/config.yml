@@ -5,42 +5,42 @@ backend:
 media_folder: /src/images
 public_folder: /public/
 
-singletons:
-  - name: site
-    label: Site
-    file: /site.json
-    format: json
-    create: false
-    widget: object
-    fields:
-      - {label: Language, name: language, widget: string, default: "en"}
-      - {label: Site name, name: siteName, widget: string, default: ""}
-      - label: Logo
-        name: logo
-        widget: object
-        fields:
-          - {label: Path, name: path, widget: image}
-          - {label: Alt, name: alt, widget: string}
-        required: false
-      - {label: Theme, name: theme, widget: select, options: ["light", "dark", "bumblebee", "cupcake", "pastel"]}
-      - {label: Display font, name: fontDisplay, widget: select, options: ["comic", "bradley", "helvetica"], default: "helvetica"}
-      - {label: Body font, name: fontBody, widget: select, options: ["comic", "bradley", "helvetica"], default: "helvetica"}
-      - label: Navigation
-        name: navigation
-        widget: object
-        fields:
-          - {label: Color, name: color, widget: select, options: ["base", "primary", "secondary", "accent", "neutral"], default: "base"}
-          - {label: Button color, name: bottonColor, widget: select, options: ["base", "primary", "secondary", "accent", "neutral"], default: "neutral"}
-          - {label: Button style, name: buttonStyle, widget: select, options: ["default", "soft"], default: "default"}
-          - {label: Position, name: position, widget: select, options: ["top", "bottom"], default: "top"}
-          - {label: Rounded, name: rounded, widget: boolean, default: true}
-          - label: Links
-            name: links
-            widget: list
-            fields:
-              - {label: Label, name: label, widget: string}
-              - {label: Url, name: url, widget: string}
 collections:
+  - name: siteSetting
+    label: Site Setting
+    files:
+      - label: Setting
+        name: setting
+        file: site.json
+        widget: object
+        fields:
+          - {label: Language, name: language, widget: string, default: "en"}
+          - {label: Site name, name: siteName, widget: string, default: ""}
+          - label: Logo
+            name: logo
+            widget: object
+            fields:
+              - {label: Path, name: path, widget: image}
+              - {label: Alt, name: alt, widget: string}
+            required: false
+          - {label: Theme, name: theme, widget: select, options: ["light", "dark", "bumblebee", "cupcake", "pastel"]}
+          - {label: Display font, name: fontDisplay, widget: select, options: ["comic", "bradley", "helvetica"], default: "helvetica"}
+          - {label: Body font, name: fontBody, widget: select, options: ["comic", "bradley", "helvetica"], default: "helvetica"}
+          - label: Navigation
+            name: navigation
+            widget: object
+            fields:
+              - {label: Color, name: color, widget: select, options: ["base", "primary", "secondary", "accent", "neutral"], default: "base"}
+              - {label: Button color, name: bottonColor, widget: select, options: ["base", "primary", "secondary", "accent", "neutral"], default: "neutral"}
+              - {label: Button style, name: buttonStyle, widget: select, options: ["default", "soft"], default: "default"}
+              - {label: Position, name: position, widget: select, options: ["top", "bottom"], default: "top"}
+              - {label: Rounded, name: rounded, widget: boolean, default: true}
+              - label: Links
+                name: links
+                widget: list
+                fields:
+                  - {label: Label, name: label, widget: string}
+                  - {label: Url, name: url, widget: string}
   - name: pages
     label: Pages
     folder: content/pages
@@ -206,7 +206,7 @@ collections:
                               - {label: Alt, name: alt, widget: string}
                             required: false
                           - {label: Title, name: title, widget: string}
-                          - {label: Description, name: description, widget: string, required, false}
+                          - {label: Description, name: description, widget: string, required: false}
                           - label: Link
                             name: link
                             widget: object
